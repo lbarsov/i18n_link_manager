@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Link Manager (updated)
-Description: Manage a collection of links (I18N enabled) based on version of  Rogier Koppejan
+Description: Manage a collection of links (I18N enabled) based on code of Rogier Koppejan
 Version: 2.0
 Author: Lev Barsov, Rogier Koppejan
 Author URI: http://rxgr.nl/getsimple/
@@ -19,7 +19,7 @@ register_plugin(
 	'2.0',
 	'Lev Barsov, Rogier Koppejan',
 	'https://github.com/lbarsov/',
-	'Manage a collection of links (I18N enabled) based on version of  Rogier Koppejan',
+	'Manage a collection of links (I18N enabled) based on code of Rogier Koppejan',
 	'plugins',
 	'lm_main'
 );
