@@ -105,9 +105,10 @@ function lm_delete_link($id) {
 function lm_save_order() {
 	@copy(LM_DATA, LM_BACKUP);
 	$links = array();
-	foreach ($_POST as $name=>$url) {
-		if ($name != 'order') {
-			$links[] = array('name'=>str_replace('_', ' ', $name), 'url'=>$url);
+	foreach ($_POST as $link) {
+		if ($link->name != 'order') {
+			$link->name = str_replace('_', ' ', $link->name);
+			$links[] = $link;
 		}
 	}
 	if (lm_to_xml($links))
