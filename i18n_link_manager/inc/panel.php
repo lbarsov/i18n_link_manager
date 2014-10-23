@@ -11,23 +11,23 @@
  */
 function lm_admin_panel() {
 	?>
-	<h3 class="floated"><?php i18n('i18n_link_manager/PLUGIN_NAME'); ?></h3>
+	<h3 class="floated"><?php i18n(LM_PLUGIN.'/PLUGIN_NAME'); ?></h3>
 	<div class="edit-nav clearfix">
-		<a href="load.php?id=link_manager&edit"><?php i18n('i18n_link_manager/NEW_LINK'); ?></a>
+		<a href="load.php?id=<?php echo LM_PLUGIN; ?>&edit"><?php i18n(LM_PLUGIN.'/NEW_LINK'); ?></a>
 	</div>
 	<?php
 	$links = lm_get_links();
 	if (empty($links))
-		echo '<p>' . i18n_r('i18n_link_manager/NO_LINKS') . '</p>';
+		echo '<p>'.i18n_r(LM_PLUGIN.'/NO_LINKS').'</p>';
 	else {
-		if (count($links) > 1) echo '<p>' . i18n_r('i18n_link_manager/CHANGE_ORDER') . '</p>'
+		if (count($links) > 1) echo '<p>' . i18n_r(LM_PLUGIN.'/CHANGE_ORDER') . '</p>'
 		?>
-		<form method="post">
+		<form method="post" action="load.php?id=<?php echo LM_PLUGIN; ?>">
 			<table id="links" class="highlight">
 				<tr>
-					<th><?php i18n('i18n_link_manager/NAME'); ?></th>
-					<th><?php i18n('i18n_link_manager/DESCRIPTION'); ?></th>
-					<th style="text-align: right;"><?php i18n('i18n_link_manager/URL'); ?></th>
+					<th><?php i18n(LM_PLUGIN.'/NAME'); ?></th>
+					<th><?php i18n(LM_PLUGIN.'/DESCRIPTION'); ?></th>
+					<th style="text-align: right;"><?php i18n(LM_PLUGIN.'/URL'); ?></th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -41,7 +41,7 @@ function lm_admin_panel() {
 					<tr>
 						<input type="hidden" name="<?php echo $name; ?>" value="<?php echo $url; ?>">
 						<td>
-							<a href="load.php?id=link_manager&edit=<?php echo $id; ?>" title="<?php i18n('i18n_link_manager/EDIT_LINK'); ?>: <?php echo $name; ?>">
+							<a href="load.php?id=<?php echo LM_PLUGIN; ?>&edit=<?php echo $id; ?>" title="<?php i18n(LM_PLUGIN.'/EDIT_LINK'); ?>: <?php echo $name; ?>">
 								<?php echo $name; ?>
 							</a>
 						</td>
@@ -52,12 +52,12 @@ function lm_admin_panel() {
 							<span><?php echo strlen($url) > 50 ? substr($url, 0, 50) . '&hellip;' : $url; ?></span>
 						</td>
 						<td class="secondarylink">
-							<a href="<?php echo $url; ?>" target="_blank" title="<?php i18n('i18n_link_manager/VIEW_LINK'); ?>: <?php echo $name; ?>">
+							<a href="<?php echo $url; ?>" target="_blank" title="<?php i18n(LM_PLUGIN.'/VIEW_LINK'); ?>: <?php echo $name; ?>">
 								#
 							</a>
 						</td>
 						<td class="delete">
-							<a href="load.php?id=link_manager&delete=<?php echo $id; ?>" class="delconfirm" title="<?php i18n('i18n_link_manager/DELETE_LINK'); ?>: <?php echo $name; ?>?">
+							<a href="load.php?id=<?php echo LM_PLUGIN; ?>&delete=<?php echo $id; ?>" class="delconfirm" title="<?php i18n(LM_PLUGIN.'/DELETE_LINK'); ?>: <?php echo $name; ?>?">
 								X
 							</a>
 						</td>
@@ -68,7 +68,7 @@ function lm_admin_panel() {
 				</tbody>
 			</table>
 			<?php if (count($links) > 1) { ?>
-				<input type="submit" class="submit" name="order" value="<?php i18n('i18n_link_manager/SAVE_ORDER'); ?>">
+				<input type="submit" class="submit" name="order" value="<?php i18n(LM_PLUGIN.'/SAVE_ORDER'); ?>">
 			<?php } ?>
 		</form>
 
