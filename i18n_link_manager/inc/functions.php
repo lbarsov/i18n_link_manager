@@ -74,9 +74,9 @@ function lm_save_link() {
 	else
 		$links[] = $arr;
 	if (lm_to_xml($links))
-		lm_display_message(i18n_r('i18n_link_manager/SUCCESS_SAVE'), true, true);
+		lm_display_message(i18n_r(LM_PLUGIN.'/SUCCESS_SAVE'), true, true);
 	else
-		lm_display_message(i18n_r('i18n_link_manager/ERROR_SAVE'), false);
+		lm_display_message(i18n_r(LM_PLUGIN.'/ERROR_SAVE'), false);
 }
 
 
@@ -91,9 +91,9 @@ function lm_delete_link($id) {
 	if (array_key_exists($id, $links)) {
 		unset($links[$id]);
 		if (lm_to_xml($links))
-			lm_display_message(i18n_r('i18n_link_manager/SUCCESS_DELETE'), true, true);
+			lm_display_message(i18n_r(LM_PLUGIN.'/SUCCESS_DELETE'), true, true);
 		else
-			lm_display_message(i18n_r('i18n_link_manager/ERROR_DELETE'), false);
+			lm_display_message(i18n_r(LM_PLUGIN.'/ERROR_DELETE'), false);
 	}
 }
 
@@ -112,17 +112,17 @@ function lm_save_order() {
 		}
 	}
 	if (lm_to_xml($links))
-		lm_display_message(i18n_r('i18n_link_manager/SUCCESS_SAVE'), true, true);
+		lm_display_message(i18n_r(LM_PLUGIN,'/SUCCESS_SAVE'), true, true);
 	else
-		lm_display_message(i18n_r('i18n_link_manager/ERROR_SAVE'), false);
+		lm_display_message(i18n_r(LM_PLUGIN.'/ERROR_SAVE'), false);
 }
 
 
 function lm_undo() {
 	if (copy(LM_BACKUP, LM_DATA))
-		lm_display_message(i18n_r('i18n_link_manager/SUCCESS_RESTORE'));
+		lm_display_message(i18n_r(LM_PLUGIN.'/SUCCESS_RESTORE'));
 	else
-		lm_display_message(i18n_r('i18n_link_manager/ERROR_RESTORE'), false);
+		lm_display_message(i18n_r(LM_PLUGIN.'/ERROR_RESTORE'), false);
 }
 
 
@@ -206,7 +206,7 @@ function lm_to_xml($links) {
 function lm_display_message($msg, $update=true, $undo=false) {
 	if (isset($msg)) {
 		if ($undo)
-			$msg .= " <a href=\"load.php?id=i18n_link_manager&undo\">" . i18n_r('UNDO') . '</a>';
+			$msg .= " <a href=\"load.php?id=".LM_PLUGIN."&undo\">" . i18n_r('UNDO') . '</a>';
 		?>
 		<script type="text/javascript">
 			$(function() {
