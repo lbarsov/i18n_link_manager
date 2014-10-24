@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Link Manager edit template
+ * I18N Link Manager edit template
  */
 
 if (isset($link))
@@ -10,26 +10,41 @@ else
 	echo '<h3>' . i18n_r(LM_PLUGIN.'/NEW_LINK') . '</h3>';
 
 ?>
+<div class="edit-nav clearfix">
+	<a href="load.php?id=<?php echo LM_PLUGIN; ?>&category"><?php i18n(LM_PLUGIN.'/CATEGORIES'); ?></a>
+</div>
 
 <form class="largeform" id="edit" action="load.php?id=<?php echo LM_PLUGIN; ?>" method="post" accept-charset="utf-8">
 	<?php
 	if (isset($link))
-		echo "<p><input name=\"link-id\" type=\"hidden\" value=\"$id\" /></p>";
+		echo "<input name=\"link-id\" type=\"hidden\" value=\"${id}\" />";
 	?>
+	<p>
+		<label for="link-cid"><?php i18n(LM_PLUGIN.'/CATEGORY'); ?>:</label>
+		<select class="text" name="link-cid" id="link-cid">
+			<option value=""></option>;
+			<?php
+			foreach($categories as $cid=>$cat) {
+				$selected = ($cat['cid'] === $link['cid']) ? 'selected' : '';
+				echo "<option value=\"${cat['cid']}\" $selected >${cat['name']}</option>";
+			}
+			?>
+		</select>
+	</p>
 	<p>
 		<label for="link-url"><?php i18n(LM_PLUGIN.'/URL'); ?>:</label>
 		<input class="text url required" name="link-url" id="link-url" type="text" value="<?php echo isset($link) ? $link['url'] : 'http://'; ?>" />
 	</p>
 	<p>
-		<label for="link-name"><?php i18n(LM_PLUGIN.'r/NAME'); ?>:</label>
+		<label for="link-name"><?php i18n(LM_PLUGIN.'/NAME'); ?>:</label>
 		<input class="text required" name="link-name" id="link-name" type="text" value="<?php if (isset($link)) echo $link['name']; ?>" />
 		<?php
 		if (function_exists('return_i18n_languages')) {
-			foreach(return_i18n_languages() as $lang) {
+			foreach($languages as $lang) {
 				if ($lang != return_i18n_default_language()) {
 					?>
 					<label for="<?php echo 'link-name_'.$lang; ?>"><?php echo i18n_r(LM_PLUGIN.'/NAME')." ($lang)"; ?>:</label>
-					<input class="text required" name="<?php echo 'link-name_'.$lang; ?>" id="<?php echo 'link-name_'.$lang; ?>" type="text" value="<?php if (isset($link)) echo $link['name_'.$lang]; ?>" />
+					<input class="text" name="<?php echo 'link-name_'.$lang; ?>" id="<?php echo 'link-name_'.$lang; ?>" type="text" value="<?php if (isset($link)) echo $link['name_'.$lang]; ?>" />
 					<?php
 				}
 			}
@@ -40,7 +55,7 @@ else
 		<input class="text" name="link-description" id="link-description" type="text" value="<?php if (isset($link)) echo $link['description']; ?>" />
 		<?php
 		if (function_exists('return_i18n_languages')) {
-			foreach(return_i18n_languages() as $lang) {
+			foreach($languages as $lang) {
 				if ($lang != return_i18n_default_language()) {
 					?>
 					<label for="<?php echo 'link-description_'.$lang; ?>"><?php echo i18n_r(LM_PLUGIN.'/DESCRIPTION')." ($lang)"; ?>:</label>

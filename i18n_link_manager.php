@@ -3,11 +3,19 @@
 /*
 Plugin Name: I18N Link Manager
 Description: Manage a collection of links (I18N enabled) based on code of Rogier Koppejan
-Version: 2.1
+Version: 2.2
 Author: Lev Barsov, Rogier Koppejan
-Author URI: http://rxgr.nl/getsimple/
+Author URI: https://github.com/lbarsov
 */
 
+/*
+ * Updates history
+ *
+ *  2.0 - Initial Release with Multilaguage features
+ *  2.1 - Bugfix update
+ *  2.2 - NEW - Category Added
+ *      - BUGFIX - Save order
+ */
 
 # get correct id for plugin
 $thisfile = basename(__FILE__, '.php');
@@ -15,11 +23,13 @@ $thisfile = basename(__FILE__, '.php');
 # definitions
 define('LM_PLUGIN', $thisfile);
 define('LM_NAME', 'I18N Link Manager');
-define('LM_VERSION', '2.1');
-define('LM_DATA', GSDATAOTHERPATH . 'links.xml');
-define('LM_BACKUP', GSBACKUPSPATH . 'other/links.xml');
-define('LM_INC_PATH', GSPLUGINPATH . LM_PLUGIN.'/inc/');
-define('LM_TEMPLATE_PATH', GSPLUGINPATH . LM_PLUGIN.'/template/');
+define('LM_VERSION', '2.2');
+define('LM_DATA', GSDATAOTHERPATH.'links.xml');
+define('LM_BACKUP', GSBACKUPSPATH.'other/links.xml');
+define('LM_CDATA', GSDATAOTHERPATH.'clinks.xml');
+define('LM_CBACKUP', GSBACKUPSPATH.'other/clinks.xml');
+define('LM_INC_PATH', GSPLUGINPATH.LM_PLUGIN.'/inc/');
+define('LM_TEMPLATE_PATH', GSPLUGINPATH.LM_PLUGIN.'/template/');
 
 
 # register plugin
@@ -36,11 +46,11 @@ register_plugin(
 
 
 # hooks
-add_action('common', 'lm_load');
+add_action('common',            'lm_load');
 add_action('index-pretemplate', 'lm_init');
-add_action('plugins-sidebar', 'createSideMenu', array(LM_PLUGIN, LM_NAME));
-add_action('header', 'lm_header_include');
-add_filter('content', 'lm_filter');
+add_action('plugins-sidebar',   'createSideMenu', array(LM_PLUGIN, LM_NAME));
+add_action('header',            'lm_header_include');
+add_filter('content',           'lm_filter');
 
 # language
 
@@ -72,17 +82,33 @@ function lm_main() {
 	if (isset($_POST['link'])) {
 		lm_save_link();
 		lm_admin_panel();
+	} elseif (isset($_POST['category'])) {
+		lm_save_category();
+		lm_admin_cpanel();
 	} elseif (isset($_POST['order'])) {
 		lm_save_order();
 		lm_admin_panel();
+	} elseif (isset($_POST['corder'])) {
+		lm_save_category_order();
+		lm_admin_cpanel();
 	} elseif (isset($_GET['delete'])) {
 		lm_delete_link($_GET['delete']);
 		lm_admin_panel();
+	} elseif (isset($_GET['cdelete'])) {
+		lm_delete_category($_GET['cdelete']);
+		lm_admin_cpanel();
 	} elseif (isset($_GET['edit'])) {
 		lm_edit_link($_GET['edit']);
+	} elseif (isset($_GET['cedit'])) {
+		lm_edit_category($_GET['cedit']);
 	} elseif (isset($_GET['undo'])) {
 		lm_undo();
 		lm_admin_panel();
+	} elseif (isset($_GET['cundo'])) {
+		lm_c_undo();
+		lm_admin_cpanel();
+	} elseif (isset($_GET['category'])) {
+		lm_admin_cpanel();
 	} else {
 		lm_admin_panel();
 	}
